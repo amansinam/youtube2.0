@@ -10,7 +10,9 @@ interface VideoPlayerProps {
 
 export default function VideoPlayer({ video }: VideoPlayerProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const videos = "/video/vdo.mp4";
+  const videoPath = String(video?.filepath || "")
+    .replace(/^uploads[\\/]/, "")
+    .replace(/\\/g, "/");
 
   return (
     <div className="aspect-video bg-black rounded-lg overflow-hidden">
@@ -21,7 +23,7 @@ export default function VideoPlayer({ video }: VideoPlayerProps) {
         poster={`/placeholder.svg?height=480&width=854`}
       >
         <source
-          src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/uploads/${video?.filepath}`}
+          src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/uploads/${videoPath}`}
           type="video/mp4"
         />
         Your browser does not support the video tag.
