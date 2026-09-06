@@ -19,7 +19,8 @@ const serverDirectory = path.dirname(fileURLToPath(import.meta.url));
 const uploadsDirectory = path.join(serverDirectory, "uploads");
 fs.mkdirSync(uploadsDirectory, { recursive: true });
 
-app.use(cors({ origin: process.env.FRONTEND_URL || true }));
+const frontendOrigin = process.env.FRONTEND_URL?.replace(/\/+$/, "") || true;
+app.use(cors({ origin: frontendOrigin }));
 app.use(express.json({ limit: "30mb", extended: true }));
 app.use(express.urlencoded({ limit: "30mb", extended: true }));
 app.use("/uploads", express.static(uploadsDirectory));
