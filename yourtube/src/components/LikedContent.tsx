@@ -14,6 +14,9 @@ import {
 import { useUser } from "@/lib/AuthContext";
 import axiosInstance from "@/lib/axiosinstance";
 
+const getVideoPath = (filepath: string) =>
+  String(filepath || "").replace(/^uploads[\\/]/, "").replace(/\\/g, "/");
+
 export default function LikedVideosContent() {
   const [likedVideos, setLikedVideos] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -92,7 +95,7 @@ export default function LikedVideosContent() {
             <Link href={`/watch/${item.videoid._id}`} className="flex-shrink-0">
               <div className="relative w-40 aspect-video bg-gray-100 rounded overflow-hidden">
                 <video
-                  src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/uploads/${item.videoid?.filepath}`}
+                  src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/uploads/${getVideoPath(item.videoid?.filepath)}`}
                   className="object-cover group-hover:scale-105 transition-transform duration-200"
                 />
               </div>
